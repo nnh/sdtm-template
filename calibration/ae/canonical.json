@@ -1,0 +1,23 @@
+{
+  "_comment": "AE の正準テンプレートモデル。bridgehead TemplateInput と JASPEHR FHIR Questionnaire の両出力を、この1モデルから生成できることを較正で実証する。CT は NCI codelist（C-code＋名）で同定し、各エミッタが自系の表現に変換する。validators/required はテンプレート層のもの（試験別の条件付き必須は builder 層で付与）。",
+  "name": "有害事象",
+  "domain": "AE",
+  "items": [
+    { "sdtmVariable": "AETERM",   "label": "有害事象名", "kind": "meddra", "terminology": { "type": "meddra", "level": "LLT" }, "control": "autocomplete", "required": true },
+    { "sdtmVariable": "AETOXGR",  "label": "CTCAE Grade", "kind": "ct", "terminology": { "type": "ct", "codelist": "AETOXGR", "note": "CTCAE Grade 1-5。bridgehead は CT、FHIR 実装は inline answerOption" }, "control": "radio", "required": true },
+    { "sdtmVariable": "AESEV",    "label": "重症度", "kind": "ct", "terminology": { "type": "ct", "codelist": "AESEV", "nciCode": "C66769" }, "control": "radio", "required": false },
+    { "sdtmVariable": "AESTDTC",  "label": "発現日", "kind": "date", "control": "date", "required": true, "validators": { "dateMaxToday": true } },
+    { "sdtmVariable": "AESER",    "label": "重篤な有害事象である", "kind": "ct", "terminology": { "type": "ct", "codelist": "NY", "nciCode": "C66742" }, "control": "radio", "required": true, "description": "重篤な有害事象の場合は「死に至る」〜「その他の医学的に重要な状態」を入力してください。非重篤の場合は入力不要です。" },
+    { "sdtmVariable": "AESDTH",   "label": "死に至る", "kind": "ct", "terminology": { "type": "ct", "codelist": "NY", "nciCode": "C66742" }, "control": "radio", "required": false, "seriousCriterion": true },
+    { "sdtmVariable": "AESLIFE",  "label": "生命を脅かす", "kind": "ct", "terminology": { "type": "ct", "codelist": "NY", "nciCode": "C66742" }, "control": "radio", "required": false, "seriousCriterion": true },
+    { "sdtmVariable": "AESHOSP",  "label": "入院又は入院期間の延長が必要", "kind": "ct", "terminology": { "type": "ct", "codelist": "NY", "nciCode": "C66742" }, "control": "radio", "required": false, "seriousCriterion": true },
+    { "sdtmVariable": "AESDISAB", "label": "永続的又は顕著な障害・機能不全に陥る", "kind": "ct", "terminology": { "type": "ct", "codelist": "NY", "nciCode": "C66742" }, "control": "radio", "required": false, "seriousCriterion": true },
+    { "sdtmVariable": "AESCONG",  "label": "先天異常を来す", "kind": "ct", "terminology": { "type": "ct", "codelist": "NY", "nciCode": "C66742" }, "control": "radio", "required": false, "seriousCriterion": true },
+    { "sdtmVariable": "AESMIE",   "label": "その他の医学的に重要な状態", "kind": "ct", "terminology": { "type": "ct", "codelist": "NY", "nciCode": "C66742" }, "control": "radio", "required": false, "seriousCriterion": true },
+    { "sdtmVariable": "AEACN",    "label": "事象発現後の措置 変更後の用法・用量", "kind": "ct", "terminology": { "type": "ct", "codelist": "ACN", "nciCode": "C66767" }, "control": "radio", "required": true },
+    { "sdtmVariable": "AEREL",    "label": "治験薬との因果関係", "kind": "ct", "terminology": { "type": "ct", "codelist": "AEREL", "note": "bridgehead は CT、FHIR 実装は inline answerOption(RELATED/NOT_RELATED)" }, "control": "radio", "required": true },
+    { "sdtmVariable": "AEOUT",    "label": "転帰", "kind": "ct", "terminology": { "type": "ct", "codelist": "AEOUT", "nciCode": "C66768" }, "control": "radio", "required": true },
+    { "sdtmVariable": "AEENDTC",  "label": "転帰日", "kind": "date", "control": "date", "required": true, "validators": { "dateMaxToday": true } },
+    { "sdtmVariable": "_CO",      "label": "経過内容", "kind": "text", "control": "textarea", "required": true, "ptoshExtension": true }
+  ]
+}

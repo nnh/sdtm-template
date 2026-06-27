@@ -1,0 +1,13 @@
+# 用語 refdata：NCI CT は公開だが MedDRA/WHODrug はライセンス品。一律 git 管理外。
+refdata/
+
+# 較正の ground truth：内部テンプレート・FHIR 実装サンプル。再取得可（内部の bridgehead・用語サーバ）。
+calibration/**/ground-truth/
+
+# skill の出力
+output/
+
+# 内部情報（実名・内部ID・エンドポイント）。公開しない。
+internal/
+
+.DS_Store

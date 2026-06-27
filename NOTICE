@@ -1,0 +1,15 @@
+sdtm-template
+Copyright 2026 National Hospital Organization
+Developed under AMED 25mk0121327h0001 (JASPEHR CDISC Extension WG).
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Terminology data is NOT included in this repository and must be obtained
+under your own license:
+- MedDRA / MedDRA-J: via MedDRA MSSO / JMO.
+- WHODrug Global: via the Uppsala Monitoring Centre (UMC).
+- CDISC Controlled Terminology: publicly available from NCI EVS
+  (https://evs.nci.nih.gov/ftp1/CDISC/SDTM/).
+
+"Ptosh" and "JASPEHR" are referenced for interoperability; their names and
+systems belong to their respective owners.

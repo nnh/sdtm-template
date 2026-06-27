@@ -1,0 +1,11 @@
+# 既定：すべてメンテナがレビュー対象（main マージはメンテナに集約＝承認ゲート）
+* @tosh13
+
+# 方針・ルール・JASPEHR 設計の正本はメンテナが承認
+/strategy.md            @tosh13
+/docs/house-rules.md    @tosh13
+/docs/jaspehr.md        @tosh13
+/CONTRIBUTING.md        @tosh13
+
+# コード・エミッタ・refdata 同期・skill はエンジニアもレビューするが、
+# 承認ゲートはメンテナ（@tosh13）に集約する（CONTRIBUTING.md 参照）。

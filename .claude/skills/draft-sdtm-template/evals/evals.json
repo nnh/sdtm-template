@@ -1,0 +1,53 @@
+{
+  "skill_name": "draft-sdtm-template",
+  "note": "正解テンプレートは bridgehead GraphQL template(id:) で取得（docs/eval-seed.md）。採点観点: モード判定・ドメイン一致・必須変数充足・CT一致・命名規則・複数候補提示・適用ルールの明示。",
+  "evals": [
+    {
+      "id": 1,
+      "mode": "protocol-driven",
+      "prompt": "白血球数（/uL）のテンプレートのドラフトを作って。SAPの該当章とPRTのURLはこちら。",
+      "expected_output": "protocol-driven と判定。LB を主候補に、LBTESTCD/LBTEST/LBORRES/LBORRESU/LBDTC 等の構成を推奨度付きで提示。MedDRA等の自動算出変数は除外。LBORRES/LBDTC に条件付き必須（介入ルール）を適用し、適用ルールを列挙。候補提示で停止し人の選択を待つ。",
+      "assertions": [
+        {"id": "mode_protocol", "text": "protocol-driven モードと判定した"},
+        {"id": "domain_lb", "text": "ドメイン候補に LB を含めた"},
+        {"id": "calculable_excluded", "text": "自動算出変数（cdisc.yml）を除外した"},
+        {"id": "rules_listed", "text": "適用した established ルールを列挙した"},
+        {"id": "gate_stop", "text": "候補提示後に人の選択を待って停止した"}
+      ]
+    },
+    {
+      "id": 2,
+      "mode": "protocol-driven",
+      "prompt": "PSL反応性のテンプレートを作りたい。",
+      "expected_output": "ドメインが一意でない項目として、RS 案と CNS浸潤ステータス同形の案など複数候補を推奨度＋理由付きで提示する。単一に決め打ちしない。",
+      "assertions": [
+        {"id": "multi_candidate", "text": "閾値以上の候補を複数提示した"},
+        {"id": "score_and_reason", "text": "各候補に推奨度と理由（pros/cons）を付けた"},
+        {"id": "no_single_lockin", "text": "単一案に決め打ちせず人の選択に委ねた"}
+      ]
+    },
+    {
+      "id": 3,
+      "mode": "rwd",
+      "prompt": "EHR由来のカラム『血清クレアチニン』（LOINC 2160-0、サンプル値 0.8 mg/dL）をSDTMにマッピングするテンプレートを作って。SAP/PRTはありません。",
+      "expected_output": "RWD モードと判定。元語彙 LOINC から LB を導出。共通ルールのみ適用し、前向き入力向けの条件付き必須・デフォルト値・「不明」非表示等は『RWDのため非適用』と明記。event-based 前提（VISIT/EPOCH を強制しない）、トレーサビリティ（ソース→SDTM 写像根拠）を候補に含める。",
+      "assertions": [
+        {"id": "mode_rwd", "text": "RWD モードと判定した"},
+        {"id": "vocab_driven", "text": "LOINC を起点に LB を導出した"},
+        {"id": "heuristics_suppressed", "text": "介入ヒューリスティックを非適用とし、その旨を明記した"},
+        {"id": "traceability", "text": "ソース→SDTM の写像根拠/トレーサビリティに言及した"}
+      ]
+    },
+    {
+      "id": 4,
+      "mode": "protocol-driven",
+      "prompt": "CD19のテンプレートをコピーしてCD10のテンプレートを作って。",
+      "expected_output": "既存 CD19 テンプレートを searchTemplates で特定し、TESTCD/TEST のみを差し替えた構成を提示。TESTCD 8文字制約と命名の一意性を確認。",
+      "assertions": [
+        {"id": "find_source", "text": "コピー元 CD19 テンプレートを検索・特定した"},
+        {"id": "minimal_change", "text": "TESTCD/TEST のみ差し替える最小変更とした"},
+        {"id": "testcd_8char", "text": "TESTCD 8文字制約を確認した"}
+      ]
+    }
+  ]
+}
