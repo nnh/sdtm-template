@@ -1,6 +1,6 @@
 # アクションアイテム
 
-先進医療実績報告（AMCPR1A）SDTM テンプレートのレビューと還流。詳細は `docs/work-logs/20260628-work-log.md`。
+先進医療実績報告（AMCPR1A）SDTM テンプレートのレビューと還流。詳細は `docs/work-logs/20260629-work-log.md`（前日分は `20260628-work-log.md`）。
 
 ## レビュー待ち
 
