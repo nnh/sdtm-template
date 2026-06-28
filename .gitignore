@@ -7,6 +7,12 @@ calibration/**/ground-truth/
 # skill の出力
 output/
 
+# 作業ノート（1件ごとの判断記録。コミットしない）
+tasks/
+
+# セッションで参照した添付・入力データの退避先（生ファイル）
+attachments/
+
 # 内部情報（実名・内部ID・エンドポイント）。公開しない。
 internal/
 
