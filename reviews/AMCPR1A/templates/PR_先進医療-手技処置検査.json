@@ -9,19 +9,18 @@
       "fieldType": "text",
       "cdiscVariableSuffix": "SPID",
       "label": "テンプレート識別子",
-      "defaultValue": "AMCPR1A",
+      "defaultValue": "",
       "isInvisible": true,
-      "description": "--SPID（Sponsor-Defined Identifier）。本『先進医療実績報告』JASPEHR テンプレート由来であることを全ドメイン共通で示す provenance タグ（複数テンプレートが同居しても、どのフォーム由来のレコードかを区別できる）。標準 Identifier 変数のため全ドメインで使用可・CT不要。本フォームは1患者1先進医療のため RELREC は不要。",
+      "description": "--SPID（Sponsor-Defined Identifier）。フォーム入力の先進医療名を --SPID に設定し、全ドメイン共通の provenance タグとする。(STUDYID, USUBJID, --SPID) で同一フォーム由来レコードを束ねられる。標準 Identifier 変数・CT不要。本フォームは1患者1先進医療のため RELREC 不要。",
       "uuid": "d1c86681-79a2-46b7-97f5-6ad87e330f11"
     },
     {
-      "type": "FieldItem::Assigned",
+      "type": "FieldItem::Article",
       "fieldType": "text",
       "cdiscVariableSuffix": "TRT",
       "label": "先進医療名",
       "defaultValue": "",
-      "isInvisible": true,
-      "description": "PR レコードの topic 変数（PRTRT）。1 実績報告 = 1 先進医療のため試験構築時に固定値を設定する。手技・処置・検査・機器使用ベースの先進医療に使用。",
+      "description": "PRTRT＝Interventions の topic 変数＝先進医療名（フォーム入力）。この値を --SPID にも設定し provenance とする。手技系→PR / 薬物系→EC。",
       "uuid": "f4f3318c-a90f-42cf-8aa0-b0183dddc786"
     },
     {

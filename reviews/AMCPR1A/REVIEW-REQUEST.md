@@ -15,9 +15,10 @@
 ## 前提
 
 - モード: RWD・観察（SAP/PRT なし＝共通ルールのみ適用、介入ヒューリスティックは抑制）
-- フォーム識別子 SPID: `AMCPR1A`（全ドメイン共通・provenance）
-- 除外: 年齢（AGE）・性別（SEX）＝依頼により不要、総合計＝自動算出
-- 機微情報なし（患者データ・用語実体・内部テンプレ・実名を含まない。先進医療名は空＝試験構築時設定）
+- `--SPID`＝先進医療名（フォーム入力・全ドメイン共通の provenance）。AMCPR1A はリポジトリ/PR 用のフォーム整理コード
+- 項目はフォーム表示順に忠実（ドメイン非集約）
+- 除外: 総合計＝自動算出のみ（年齢・性別は収集する）
+- 機微情報なし（患者データ・用語実体・内部テンプレ・実名を含まない。先進医療名・施設コードはフォーム入力）
 
 ## レビュー方法
 
@@ -59,13 +60,25 @@
 - 採用: SDTM に費用標準ドメインがなく SUPP 不使用のため FA に押し込み。1費用=1 FATESTCD（`COSTINS`/`COSTCOP`/`COSTPAT`/`COSTOTH`）の横展開。通貨は ISO 4217 `JPY`（UNIT CT 非収載のため sponsor 拡張）。
 - 確認: 費用の FA 格納・SUPP 不使用方針の継続でよいか。通貨単位の扱い。
 
-### 8. 全ドメインに `--SPID=AMCPR1A`、RELREC 不要
-- 採用: provenance タグ（どのテンプレート由来かを区別）。1患者1先進医療のため `USUBJID` で一意＝RELREC 不要（FA は `FAOBJ` で対象明示）。
-- 確認: SPID 命名・provenance 運用でよいか。RELREC 不要の判断でよいか。
+### 8. 先進医療名を --SPID に設定し RELREC 不要
+- 採用: フォーム入力の先進医療名を全ドメインの `--SPID` に設定し provenance タグとする。PR/EC では同値が topic `--TRT` も兼ねる。1患者1先進医療のため `USUBJID` で一意＝RELREC 不要（FA は `FAOBJ` で対象明示）。
+- 確認: 先進医療名＝SPID（兼 --TRT）の運用でよいか。RELREC 不要の判断でよいか。
 
 ### 9. sponsor 拡張 CT の登録
 - 該当: `ONGOING`/`DISCONTINUED`（DS）、`EFFECTIVE`/`NOT EFFECTIVE`/`UNKNOWN`/`OVRLEFF`（RS）、`JPY`（FA）、費用 FATESTCD 4種。
 - 確認: bridgehead への CT 登録の進め方（`is_tbc` 解消）。
+
+### 10. 保険医療機関を `DM.SITEID` に格納
+- 採用: 報告施設を `SITEID` に格納し、submission value は保険医療機関コード（Ptosh 保持）とする。表示は機関名。
+- 確認: SITEID への格納・コードを submission value とする運用でよいか。
+
+### 11. 患者番号を DM.SUBJID に自動代入
+- 採用: フォームに入力欄はなく、JASPEHR template 上は hidden で診察券番号を `SUBJID` に自動代入。
+- 確認: 診察券番号→SUBJID の自動代入でよいか。
+
+### 12. 年齢・性別を DM に収集
+- 採用: `DM.AGE`（+`AGEU=YEARS`）、`DM.SEX`（男=`M`/女=`F`・C66731 一次照合）。
+- 確認: 収集方針・SEX のコード対応でよいか。
 
 ## 次への接続
 

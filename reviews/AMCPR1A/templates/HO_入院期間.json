@@ -9,9 +9,9 @@
       "fieldType": "text",
       "cdiscVariableSuffix": "SPID",
       "label": "テンプレート識別子",
-      "defaultValue": "AMCPR1A",
+      "defaultValue": "",
       "isInvisible": true,
-      "description": "--SPID（Sponsor-Defined Identifier）。本『先進医療実績報告』JASPEHR テンプレート由来であることを全ドメイン共通で示す provenance タグ（複数テンプレートが同居しても、どのフォーム由来のレコードかを区別できる）。標準 Identifier 変数のため全ドメインで使用可・CT不要。本フォームは1患者1先進医療のため RELREC は不要。",
+      "description": "--SPID（Sponsor-Defined Identifier）。フォーム入力の先進医療名を --SPID に設定し、全ドメイン共通の provenance タグとする。(STUDYID, USUBJID, --SPID) で同一フォーム由来レコードを束ねられる。標準 Identifier 変数・CT不要。本フォームは1患者1先進医療のため RELREC 不要。",
       "uuid": "3297499c-38a0-4860-be4e-892f91b857bf"
     },
     {
