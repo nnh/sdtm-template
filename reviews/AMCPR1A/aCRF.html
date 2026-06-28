@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<title>aCRF 先進医療実績報告 (AMCPR1A)</title>
+<style>
+body{font-family:'Hiragino Sans','Yu Gothic',sans-serif;color:#222;max-width:900px;margin:0 auto;padding:24px;line-height:1.5}
+h1{font-size:1.5em;margin:0 0 2px}
+.meta{color:#555;font-size:.85em;margin-bottom:14px}
+.legend{margin:10px 0 18px}
+.domain_name{display:inline-block;padding:3px 8px;margin:3px 4px 3px 0;border:1px solid #999;border-radius:3px;font-family:monospace;font-size:.82em}
+.note{background:#f7f7f7;border-left:4px solid #bbb;padding:8px 12px;font-size:.85em;margin:8px 0 16px}
+h3.sec{font-size:1.05em;border-bottom:2px solid #333;padding-bottom:3px;margin:22px 0 4px}
+p.snote{color:#666;font-size:.82em;margin:2px 0 8px}
+.variant{border:1px solid #ddd;border-radius:6px;padding:6px 12px;margin:8px 0}
+.vh{font-weight:bold;font-size:.9em;color:#225;margin:4px 0}
+ul{list-style:none;padding:0;margin:0}
+li{border-bottom:1px dashed #ddd;padding:9px 0}
+.fi{display:flex;align-items:flex-start;gap:14px}
+.labels{flex:0 0 44%}
+.lab{font-weight:600}
+.desc{color:#777;font-size:.78em;margin-top:2px}
+.ctrl{flex:1}
+input{padding:4px 6px;border:1px solid #aaa;border-radius:3px;background:#fafafa;width:90%}
+input[type=number]{width:140px}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt{font-size:.92em}
+.sub{font-family:monospace;font-size:.82em;color:#444}
+.spx{color:#c00;font-weight:bold}
+.cvs{margin-top:6px;margin-left:0}
+.cv{display:inline-block;padding:2px 7px;margin:2px 5px 2px 0;border:1px solid #888;border-radius:3px;font-family:monospace;font-size:.8em;color:#222}
+.cvx{display:inline-block;padding:2px 7px;margin:2px 5px 2px 0;border:1px dashed #aaa;border-radius:3px;font-family:monospace;font-size:.76em;color:#555;background:#fcfcfc}
+.foot{margin-top:24px;border-top:1px solid #ccc;padding-top:10px;font-size:.8em;color:#555}
+@media print{body{max-width:none}@page{size:A4;margin:14mm}}
+</style></head><body>
+<h1>先進医療「実績報告」 annotated CRF（aCRF）</h1>
+<div class="meta">SPID: AMCPR1A ／ モード: RWD・観察 ／ 1患者入力フォーム ／ Ptosh CDISC::Annotatable 形式に準拠 ／ status: draft</div>
+<div class="legend"><span class="domain_name" style="background-color:#f4b0b0">DM=Demographics</span><span class="domain_name" style="background-color:#f4e3b0">MH=Medical History</span><span class="domain_name" style="background-color:#d2f4b0">PR=Procedures</span><span class="domain_name" style="background-color:#b0f4c1">EC=Exposure as Collected</span><span class="domain_name" style="background-color:#b0f3f4">HO=Healthcare Encounters</span><span class="domain_name" style="background-color:#b0c1f4">DS=Disposition</span><span class="domain_name" style="background-color:#d2b0f4">RS=Disease Response and Clin Classification</span><span class="domain_name" style="background-color:#f4b0e3">FA=Findings About</span></div>
+<div class="note">凡例: 色付きボックス＝SDTM 変数（ドメイン色）。Findings は「--ORRES when --TESTCD = 既定値」。破線ボックス＝固定修飾子・CT（Ptosh の TESTCD-only 注釈をレビュー用に補足）。<span class="spx">*</span>＝sponsor 拡張（標準 CT になし・is_tbc）。hidden/assigned 変数（SPID 等）は Ptosh 同様フィールド非表示。</div>
+<ul><li><div class="fi"><div class="labels"><div class="lab">患者番号</div></div>
+<div class="ctrl"><input type="text" disabled></div></div>
+<div class="cvs"><span class="cv" style="background-color:#f4b0b0">SUBJID</span>
+<span class="cvx">性別(SEX)・年齢(AGE)は対象外</span></div></li><li><div class="fi"><div class="labels"><div class="lab">診断名</div>
+<div class="desc">既存テンプレート（MH・template 19）を使用</div></div>
+<div class="ctrl"><input type="text" disabled></div></div>
+<div class="cvs"><span class="cv" style="background-color:#f4e3b0">MHTERM</span></div></li></ul>
+<h3 class="sec">先進医療（介入）</h3><p class="snote">先進医療名に応じて、手技系（PR）か薬物系（EC）のいずれか1テンプレートを使用</p><div class="variant"><div class="vh">手技・処置・検査ベース → PR</div><ul><li>
+  <div class="fi">
+    <div class="labels"><div class="lab">初回実施日</div></div>
+    <div class="ctrl"><input type="date" disabled></div>
+  </div>
+  <div class="cvs"><span class="cv" style="background-color:#d2f4b0">PRSTDTC</span></div>
+</li><li>
+  <div class="fi">
+    <div class="labels"><div class="lab">実施回数（回）</div></div>
+    <div class="ctrl"><input type="number" step="1" disabled></div>
+  </div>
+  <div class="cvs"><span class="cv" style="background-color:#d2f4b0">PRDOSTOT</span><span class="cvx">単位 PRDOSU = APPLICATION</span></div>
+</li></ul></div><div class="variant"><div class="vh">薬物・生物製剤・再生医療等製品ベース → EC</div><ul><li>
+  <div class="fi">
+    <div class="labels"><div class="lab">初回実施日</div></div>
+    <div class="ctrl"><input type="date" disabled></div>
+  </div>
+  <div class="cvs"><span class="cv" style="background-color:#b0f4c1">ECSTDTC</span></div>
+</li><li>
+  <div class="fi">
+    <div class="labels"><div class="lab">実施回数（回）</div></div>
+    <div class="ctrl"><input type="number" step="1" disabled></div>
+  </div>
+  <div class="cvs"><span class="cv" style="background-color:#b0f4c1">ECDOSTOT</span><span class="cvx">単位 ECDOSU = APPLICATION</span></div>
+</li></ul></div><h3 class="sec">入院期間</h3><ul><li>
+  <div class="fi">
+    <div class="labels"><div class="lab">入院期間（日）</div></div>
+    <div class="ctrl"><input type="number" step="1" disabled></div>
+  </div>
+  <div class="cvs"><span class="cv" style="background-color:#b0f3f4">HODUR</span></div>
+</li></ul><h3 class="sec">転帰</h3><ul><li>
+  <div class="fi">
+    <div class="labels"><div class="lab">転帰</div></div>
+    <div class="ctrl"><div class="opts"><label class="opt"><input type="radio" disabled> 治癒 <span class="sub">→RECOVERY</span></label><label class="opt"><input type="radio" disabled> 継続 <span class="sub">→ONGOING<span class="spx">*</span></span></label><label class="opt"><input type="radio" disabled> 中止 <span class="sub">→DISCONTINUED<span class="spx">*</span></span></label><label class="opt"><input type="radio" disabled> 死亡 <span class="sub">→DEATH</span></label></div></div>
+  </div>
+  <div class="cvs"><span class="cv" style="background-color:#b0c1f4">DSDECOD</span><span class="cvx">DSCAT = DISPOSITION EVENT</span><span class="cvx">CT: C66727 NCOMPLT (Completion/Reason for Non-Completion)</span></div>
+</li></ul><h3 class="sec">評価結果</h3><ul><li>
+  <div class="fi">
+    <div class="labels"><div class="lab">評価結果</div></div>
+    <div class="ctrl"><div class="opts"><label class="opt"><input type="radio" disabled> 有効 <span class="sub">→EFFECTIVE<span class="spx">*</span></span></label><label class="opt"><input type="radio" disabled> 無効 <span class="sub">→NOT EFFECTIVE<span class="spx">*</span></span></label><label class="opt"><input type="radio" disabled> 不明 <span class="sub">→UNKNOWN<span class="spx">*</span></span></label></div></div>
+  </div>
+  <div class="cvs"><span class="cv" style="background-color:#d2b0f4">RSORRES when RSTESTCD = OVRLEFF</span><span class="cvx">CT: sponsor 先進医療 評価結果（sponsor-defined）</span></div>
+</li></ul><h3 class="sec">先進医療費用</h3><p class="snote">各費用は FA の別 FATESTCD レコード（総合計は ①+②+③+④ の自動算出のため非収集）</p><ul><li>
+  <div class="fi">
+    <div class="labels"><div class="lab">①保険外併用療養費分（保険者負担）（円）</div></div>
+    <div class="ctrl"><input type="number" step="1" disabled></div>
+  </div>
+  <div class="cvs"><span class="cv" style="background-color:#f4b0e3">FAORRES when FATESTCD = COSTINS</span><span class="cvx">単位 FAORRESU = JPY*</span></div>
+</li><li>
+  <div class="fi">
+    <div class="labels"><div class="lab">②一部負担金（被保険者負担）（円）</div></div>
+    <div class="ctrl"><input type="number" step="1" disabled></div>
+  </div>
+  <div class="cvs"><span class="cv" style="background-color:#f4b0e3">FAORRES when FATESTCD = COSTCOP</span><span class="cvx">単位 FAORRESU = JPY*</span></div>
+</li><li>
+  <div class="fi">
+    <div class="labels"><div class="lab">③患者負担（先進医療費用）（円）</div></div>
+    <div class="ctrl"><input type="number" step="1" disabled></div>
+  </div>
+  <div class="cvs"><span class="cv" style="background-color:#f4b0e3">FAORRES when FATESTCD = COSTPAT</span><span class="cvx">単位 FAORRESU = JPY*</span></div>
+</li><li>
+  <div class="fi">
+    <div class="labels"><div class="lab">④その他（円）</div></div>
+    <div class="ctrl"><input type="number" step="1" disabled></div>
+  </div>
+  <div class="cvs"><span class="cv" style="background-color:#f4b0e3">FAORRES when FATESTCD = COSTOTH</span><span class="cvx">単位 FAORRESU = JPY*</span></div>
+</li></ul>
+<div class="foot">全レコードに --SPID = AMCPR1A（provenance）。本フォームは1患者1先進医療のため RELREC 不要。詳細・判断根拠は SUMMARY-AMCPR1A.md 参照。</div>
+</body></html>

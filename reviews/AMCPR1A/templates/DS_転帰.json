@@ -1,0 +1,70 @@
+{
+  "name": "転帰",
+  "domain": "DS",
+  "status": "draft",
+  "uuid": "392d85fa-2a9d-416d-8b66-01843bf1effd",
+  "fieldItems": [
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "SPID",
+      "label": "テンプレート識別子",
+      "defaultValue": "AMCPR1A",
+      "isInvisible": true,
+      "description": "--SPID（Sponsor-Defined Identifier）。本『先進医療実績報告』JASPEHR テンプレート由来であることを全ドメイン共通で示す provenance タグ（複数テンプレートが同居しても、どのフォーム由来のレコードかを区別できる）。標準 Identifier 変数のため全ドメインで使用可・CT不要。本フォームは1患者1先進医療のため RELREC は不要。",
+      "uuid": "3dc321e7-84e7-4e6a-9d40-7600c2a5a1f2"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "CAT",
+      "label": "区分",
+      "defaultValue": "DISPOSITION EVENT",
+      "isInvisible": true,
+      "description": "DSCAT＝disposition の区分。先進医療治療コースの転帰のため DISPOSITION EVENT を固定。",
+      "uuid": "05b81797-2490-4a49-ad4b-2366b1adb3c7"
+    },
+    {
+      "type": "FieldItem::Article",
+      "fieldType": "radio_button",
+      "cdiscVariableSuffix": "DECOD",
+      "label": "転帰",
+      "defaultValue": "",
+      "description": "DSDECOD＝標準化された転帰。表示は日本語、submission value は ASCII。DSTERM（verbatim）は選択肢の表示ラベル（治癒/継続/中止/死亡）から導出。RWD・観察モード：条件付き必須・既定値は非適用（事前選択しない）。",
+      "controlledTerminology": {
+        "name": "DSDECOD",
+        "series": "C66727",
+        "codelistName": "NCOMPLT (Completion/Reason for Non-Completion)",
+        "version": "2025-09-26",
+        "extensible": true,
+        "terms": [
+          {
+            "submissionValue": "RECOVERY",
+            "display": "治癒",
+            "ctSource": "C66727",
+            "isTbc": false
+          },
+          {
+            "submissionValue": "ONGOING",
+            "display": "継続",
+            "ctSource": "sponsor-extension",
+            "isTbc": true
+          },
+          {
+            "submissionValue": "DISCONTINUED",
+            "display": "中止",
+            "ctSource": "sponsor-extension",
+            "isTbc": true
+          },
+          {
+            "submissionValue": "DEATH",
+            "display": "死亡",
+            "ctSource": "C66727",
+            "isTbc": false
+          }
+        ]
+      },
+      "uuid": "7dc9992c-ad50-4543-b852-b478aa070ee1"
+    }
+  ]
+}

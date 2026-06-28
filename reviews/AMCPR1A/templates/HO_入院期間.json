@@ -1,0 +1,43 @@
+{
+  "name": "入院期間",
+  "domain": "HO",
+  "status": "draft",
+  "uuid": "8198a1cf-d286-4bdc-a7ad-bbe45a9eeec8",
+  "fieldItems": [
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "SPID",
+      "label": "テンプレート識別子",
+      "defaultValue": "AMCPR1A",
+      "isInvisible": true,
+      "description": "--SPID（Sponsor-Defined Identifier）。本『先進医療実績報告』JASPEHR テンプレート由来であることを全ドメイン共通で示す provenance タグ（複数テンプレートが同居しても、どのフォーム由来のレコードかを区別できる）。標準 Identifier 変数のため全ドメインで使用可・CT不要。本フォームは1患者1先進医療のため RELREC は不要。",
+      "uuid": "3297499c-38a0-4860-be4e-892f91b857bf"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "TERM",
+      "label": "医療上のイベント",
+      "defaultValue": "HOSPITALIZATION",
+      "isInvisible": true,
+      "description": "HOTERM＝Healthcare Encounters（Events クラス）の topic 変数。入院イベントとして HOSPITALIZATION を固定。1患者1先進医療のため USUBJID で当該エピソードに一意＝RELREC 不要。",
+      "uuid": "ec816931-dfbe-4fdb-905f-2b0bbe912aa2"
+    },
+    {
+      "type": "FieldItem::Article",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "DUR",
+      "label": "入院期間（日）",
+      "defaultValue": "",
+      "description": "HODUR＝在院期間。eCRF では日数を整数で直接入力し、SDTM 値は ISO8601 期間「P{n}D」へ写像する（例 14→P14D）。RWD・観察モード：条件付き必須は非適用。入退院日（HOSTDTC/HOENDTC）は本フォームでは非収集（集計値の日数のみ）。",
+      "validators": {
+        "numericality": {
+          "only_integer": true,
+          "greater_than_or_equal_to": 0
+        }
+      },
+      "uuid": "07bf2069-2b65-4f1b-be01-c099f13dc095"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "name": "評価結果",
+  "domain": "RS",
+  "status": "draft",
+  "uuid": "1b0d3951-6077-418d-9306-b83b55116445",
+  "fieldItems": [
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "SPID",
+      "label": "テンプレート識別子",
+      "defaultValue": "AMCPR1A",
+      "isInvisible": true,
+      "description": "--SPID（Sponsor-Defined Identifier）。本『先進医療実績報告』JASPEHR テンプレート由来であることを全ドメイン共通で示す provenance タグ（複数テンプレートが同居しても、どのフォーム由来のレコードかを区別できる）。標準 Identifier 変数のため全ドメインで使用可・CT不要。本フォームは1患者1先進医療のため RELREC は不要。",
+      "uuid": "03bf13eb-3010-4b3a-b7b5-5661bd54dfca"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "TESTCD",
+      "label": "評価項目コード",
+      "defaultValue": "OVRLEFF",
+      "isInvisible": true,
+      "description": "RSTESTCD（sponsor-defined・標準 RS TESTCD は RECIST 系のため該当なし）。Overall Efficacy の略。8 文字以内・ASCII。",
+      "uuid": "b11f4a0e-e503-4d9e-b1db-1496abbd4832"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "TEST",
+      "label": "評価項目名",
+      "defaultValue": "Overall Efficacy",
+      "isInvisible": true,
+      "description": "RSTEST。先進医療の総合的な有効性評価（実績報告の『評価結果』）。",
+      "uuid": "5702abb9-8d98-4ef4-8f1f-a53188b0425a"
+    },
+    {
+      "type": "FieldItem::Article",
+      "fieldType": "radio_button",
+      "cdiscVariableSuffix": "ORRES",
+      "label": "評価結果",
+      "defaultValue": "",
+      "description": "RSORRES＝評価結果（有効/無効/不明）。標準 CT に該当応答値がないため sponsor コードリスト。RSSTRESC（標準化）は同値を導出。RWD・観察モード：『不明』は非表示にせず残す（不明非表示は介入のみのため非適用）。条件付き必須も非適用。1患者1先進医療のため USUBJID で当該エピソードに一意＝RELREC 不要。",
+      "controlledTerminology": {
+        "name": "RSORRES",
+        "series": "sponsor",
+        "codelistName": "先進医療 評価結果（sponsor-defined）",
+        "version": "2026-06-28",
+        "extensible": true,
+        "ctVerification": "標準 CDISC CT に有効/無効/不明 相当の応答値なし（RS 標準応答は RECIST CR/PR/SD/PD/NE）。全値 sponsor 拡張・is_tbc。",
+        "terms": [
+          {
+            "submissionValue": "EFFECTIVE",
+            "display": "有効",
+            "ctSource": "sponsor-extension",
+            "isTbc": true
+          },
+          {
+            "submissionValue": "NOT EFFECTIVE",
+            "display": "無効",
+            "ctSource": "sponsor-extension",
+            "isTbc": true
+          },
+          {
+            "submissionValue": "UNKNOWN",
+            "display": "不明",
+            "ctSource": "sponsor-extension",
+            "isTbc": true
+          }
+        ]
+      },
+      "uuid": "193a45ba-f2df-45c4-a3d0-335bb4793a27"
+    }
+  ]
+}

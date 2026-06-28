@@ -1,0 +1,83 @@
+{
+  "name": "①保険外併用療養費分（保険者負担）",
+  "domain": "FA",
+  "status": "draft",
+  "uuid": "89b1d8c3-f639-4c3e-ae65-16cc076caf88",
+  "fieldItems": [
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "SPID",
+      "label": "テンプレート識別子",
+      "defaultValue": "AMCPR1A",
+      "isInvisible": true,
+      "description": "--SPID（Sponsor-Defined Identifier）。本『先進医療実績報告』JASPEHR テンプレート由来であることを全ドメイン共通で示す provenance タグ（複数テンプレートが同居しても、どのフォーム由来のレコードかを区別できる）。標準 Identifier 変数のため全ドメインで使用可・CT不要。本フォームは1患者1先進医療のため RELREC は不要。",
+      "uuid": "e1948dd5-46ea-4f27-a683-c661c9d0d533"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "CAT",
+      "label": "区分",
+      "defaultValue": "COST",
+      "isInvisible": true,
+      "description": "FACAT＝費用カテゴリ。先進医療実績報告の費用4項目を COST でグルーピング。",
+      "uuid": "fb928bee-38da-474b-b55d-3edf0c450b88"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "TESTCD",
+      "label": "費用項目コード",
+      "defaultValue": "COSTINS",
+      "isInvisible": true,
+      "description": "FATESTCD（sponsor-defined・SDTM に費用標準ドメイン/CTなし）。8文字以内・ASCII。",
+      "uuid": "e81e83fb-71e9-433c-bf8b-5e91f0fc3379"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "TEST",
+      "label": "費用項目名",
+      "defaultValue": "Cost, Insurer-Paid Combined Care Portion",
+      "isInvisible": true,
+      "description": "FATEST。①保険外併用療養費分（保険者負担） に対応する英語名。",
+      "uuid": "398d9388-cd9c-46ac-9b8b-2f8bdd043b81"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "OBJ",
+      "label": "対象（先進医療名）",
+      "defaultValue": "",
+      "isInvisible": true,
+      "description": "FAOBJ＝所見の対象。先進医療名（PRTRT/ECTRT と同値）を試験構築時に設定し、費用が何についての所見かを示す。1患者1先進医療のため USUBJID＋FAOBJ で対象は一意＝RELREC 不要（1患者に複数の先進医療を扱う場合のみ RELREC/--LNKID で紐付け）。",
+      "uuid": "2b52cd9a-cccf-452a-b3f7-9217613f4875"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "ORRESU",
+      "label": "通貨単位",
+      "defaultValue": "JPY",
+      "isInvisible": true,
+      "description": "FAORRESU＝通貨単位。UNIT CT に通貨は非収載のため ISO 4217 の JPY を sponsor 拡張で固定（is_tbc・要 bridgehead 登録）。",
+      "uuid": "b431ca92-a4f7-4d0c-91da-773531769b41"
+    },
+    {
+      "type": "FieldItem::Article",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "ORRES",
+      "label": "①保険外併用療養費分（保険者負担）（円）",
+      "defaultValue": "",
+      "description": "FAORRES＝金額（円・整数）。FASTRESN は導出。RWD・観察モード：条件付き必須は非適用。SDTM に費用の標準ドメインがないため FA に押し込む設計（SUPP 不使用方針）。",
+      "validators": {
+        "numericality": {
+          "only_integer": true,
+          "greater_than_or_equal_to": 0
+        }
+      },
+      "uuid": "c5dbecc8-ce29-4a3e-b247-6b4defa1e6ee"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "name": "先進医療（手技・処置・検査）",
+  "domain": "PR",
+  "status": "draft",
+  "uuid": "d83b1e6e-a3bd-44d1-b970-2d2a9501a827",
+  "fieldItems": [
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "SPID",
+      "label": "テンプレート識別子",
+      "defaultValue": "AMCPR1A",
+      "isInvisible": true,
+      "description": "--SPID（Sponsor-Defined Identifier）。本『先進医療実績報告』JASPEHR テンプレート由来であることを全ドメイン共通で示す provenance タグ（複数テンプレートが同居しても、どのフォーム由来のレコードかを区別できる）。標準 Identifier 変数のため全ドメインで使用可・CT不要。本フォームは1患者1先進医療のため RELREC は不要。",
+      "uuid": "d1c86681-79a2-46b7-97f5-6ad87e330f11"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "TRT",
+      "label": "先進医療名",
+      "defaultValue": "",
+      "isInvisible": true,
+      "description": "PR レコードの topic 変数（PRTRT）。1 実績報告 = 1 先進医療のため試験構築時に固定値を設定する。手技・処置・検査・機器使用ベースの先進医療に使用。",
+      "uuid": "f4f3318c-a90f-42cf-8aa0-b0183dddc786"
+    },
+    {
+      "type": "FieldItem::Article",
+      "fieldType": "date",
+      "cdiscVariableSuffix": "STDTC",
+      "label": "初回実施日",
+      "defaultValue": "",
+      "description": "先進医療（手技）を初めて実施した年月日 = PRSTDTC。RWD・観察モード：観測日として写像。未来日付禁止は pre_defined_validators で自動付与（手設定不要）。条件付き必須は RWD のため非適用。",
+      "validators": {},
+      "uuid": "2f565032-d82e-40c8-83b8-1e194b733fb3"
+    },
+    {
+      "type": "FieldItem::Article",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "DOSTOT",
+      "label": "実施回数（回）",
+      "defaultValue": "",
+      "description": "PRDOSTOT に実施回数（期間内の総回数・整数）を格納。SDTM 標準に手技の回数変数がなく SUPP 不使用方針のため、Interventions の用量総量変数 --DOSTOT を回数に転用（ユーザー方針：無理してでも PR ドメイン内に格納・EC と対称）。注意：手技は本来 dosing しないため PR の dose 変数は標準外の可能性あり（bridgehead domainFields(PR) で要確認）。",
+      "validators": {
+        "numericality": {
+          "only_integer": true,
+          "greater_than_or_equal_to": 1
+        }
+      },
+      "uuid": "488c1ff3-2fae-4627-be23-5aa4200671bd"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "DOSU",
+      "label": "実施回数の単位",
+      "defaultValue": "APPLICATION",
+      "isInvisible": true,
+      "description": "PRDOSU。回数の単位として UNIT CT の標準語 APPLICATION（Application Unit）を固定。CT 実在確認済（C71620 v2025-09-26・c-code C25397）＝is_tbc 回避。",
+      "controlledTerminology": {
+        "name": "PRDOSU",
+        "series": "C71620",
+        "codelistName": "UNIT",
+        "version": "2025-09-26",
+        "canonical": "https://cdisc.org/terminology/nci/valueset/C71620|2025-09-26",
+        "submissionValue": "APPLICATION",
+        "display": "Application Unit"
+      },
+      "uuid": "ff89b760-366a-4d5e-929f-237b00d4f456"
+    }
+  ]
+}

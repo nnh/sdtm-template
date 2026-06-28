@@ -1,0 +1,83 @@
+{
+  "name": "④その他",
+  "domain": "FA",
+  "status": "draft",
+  "uuid": "224e5714-f439-4c8d-b8d4-34225d250022",
+  "fieldItems": [
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "SPID",
+      "label": "テンプレート識別子",
+      "defaultValue": "AMCPR1A",
+      "isInvisible": true,
+      "description": "--SPID（Sponsor-Defined Identifier）。本『先進医療実績報告』JASPEHR テンプレート由来であることを全ドメイン共通で示す provenance タグ（複数テンプレートが同居しても、どのフォーム由来のレコードかを区別できる）。標準 Identifier 変数のため全ドメインで使用可・CT不要。本フォームは1患者1先進医療のため RELREC は不要。",
+      "uuid": "4525499f-7686-44dc-b5d0-775a6262e9d4"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "CAT",
+      "label": "区分",
+      "defaultValue": "COST",
+      "isInvisible": true,
+      "description": "FACAT＝費用カテゴリ。先進医療実績報告の費用4項目を COST でグルーピング。",
+      "uuid": "7efefc63-ff6b-4d80-bdce-94f0303deca5"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "TESTCD",
+      "label": "費用項目コード",
+      "defaultValue": "COSTOTH",
+      "isInvisible": true,
+      "description": "FATESTCD（sponsor-defined・SDTM に費用標準ドメイン/CTなし）。8文字以内・ASCII。",
+      "uuid": "4c001ca4-3133-4e72-9be5-39f5fa8cb0a1"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "TEST",
+      "label": "費用項目名",
+      "defaultValue": "Cost, Other",
+      "isInvisible": true,
+      "description": "FATEST。④その他 に対応する英語名。",
+      "uuid": "747a046b-e614-4e74-bdcd-507d997dd1bf"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "OBJ",
+      "label": "対象（先進医療名）",
+      "defaultValue": "",
+      "isInvisible": true,
+      "description": "FAOBJ＝所見の対象。先進医療名（PRTRT/ECTRT と同値）を試験構築時に設定し、費用が何についての所見かを示す。1患者1先進医療のため USUBJID＋FAOBJ で対象は一意＝RELREC 不要（1患者に複数の先進医療を扱う場合のみ RELREC/--LNKID で紐付け）。",
+      "uuid": "e498ffd7-0920-477d-b4fb-4d5ca8872dfe"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "ORRESU",
+      "label": "通貨単位",
+      "defaultValue": "JPY",
+      "isInvisible": true,
+      "description": "FAORRESU＝通貨単位。UNIT CT に通貨は非収載のため ISO 4217 の JPY を sponsor 拡張で固定（is_tbc・要 bridgehead 登録）。",
+      "uuid": "7fb740a4-bb7b-42cc-a3a1-7aed8bfbcedf"
+    },
+    {
+      "type": "FieldItem::Article",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "ORRES",
+      "label": "④その他（円）",
+      "defaultValue": "",
+      "description": "FAORRES＝金額（円・整数）。FASTRESN は導出。RWD・観察モード：条件付き必須は非適用。SDTM に費用の標準ドメインがないため FA に押し込む設計（SUPP 不使用方針）。",
+      "validators": {
+        "numericality": {
+          "only_integer": true,
+          "greater_than_or_equal_to": 0
+        }
+      },
+      "uuid": "2cedea12-5325-4966-9828-2aca7e25d88b"
+    }
+  ]
+}
