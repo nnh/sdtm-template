@@ -42,6 +42,7 @@ bridgehead の CDISC テンプレート（SDTM 取得項目定義）を **ドラ
 | 3 | CT 解決・ルール適用・推奨度付け | - | 実在 CT 設定、適用ルール選別、スコア付与 |
 | 4 | 候補提示・選択 | **要確認** | 推奨度付き候補を提示し人が選ぶ |
 | 5 | 組み立て・セルフチェック・出力 | **要確認** | 正準モデル→TemplateInput JSON（後続で FHIR）をファイル出力 |
+| 5b | aCRF レンダリング | - | レイアウトマニフェスト→aCRF HTML を決定論生成 |
 | 6 | 知見の還流 | - | worknote → rule-candidates へ修正を蒸留 |
 
 ---
@@ -137,6 +138,36 @@ bridgehead の CDISC テンプレート（SDTM 取得項目定義）を **ドラ
 ### 出力
 
 ユーザー承認後（**要確認**）、`output/<domain>_<name>.json` に TemplateInput JSON（`status: draft`）を書き出す。これは bridgehead のインポート形式と同形で、後で手取り込み（画面貼り付け）または将来 `upsertTemplate` で投入できる。**approved への昇格は人が行う**。bridgehead に取り込めば `warnings`/`is_tbc` でサーバ検証もかかる。
+
+---
+
+## フェーズ5b: aCRF レンダリング
+
+複数テンプレートを 1 枚の **aCRF（JASPEHR template の視覚図）** にまとめる。**HTML を都度書き起こさない。** 描画規則（CSS・ドメイン配色・変数名規則・コントロール・Findings の "when" 表記・sponsor 拡張 "*"）はすべて `scripts/render_acrf.py` に固定済みで、同じマニフェストから必ず同じ HTML が出る（品質ドリフト防止）。
+
+LLM が作るのは **レイアウトマニフェスト（フォーム仕様 JSON）** だけ。これは aCRF のソース、HTML は派生物。
+
+```bash
+python3 .claude/skills/draft-sdtm-template/scripts/render_acrf.py \
+  output/<slug>-acrf-layout.json \
+  --check output/ \
+  -o output/aCRF-<slug>.html
+```
+
+`--check <templates_dir>` はマニフェストの変数を TemplateInput JSON と突合し、食い違い（綴り誤り・JSON 未作成）を stderr に警告する（描画は止めない。MH など JSON を持たない行は想定どおり warn される）。
+
+### マニフェストの要点
+
+スキーマの実体は後述の worked example を参照する。
+
+- **フォーム表示順に忠実**。ドメインで集約せず、`sections[].rows[]` の順に並べる。`header` でセクション見出し（例「報告単位」「患者ごと」）。
+- 各 row：`label`（表示名）、`control`（`text`/`number`/`date`/`radio`/`hidden`）、`radio` は `options[]`（`display`/`value`/`sponsor:true` で "*"）、`vars[]`（注釈ボックス）、`notes[]`（破線の固定修飾子・CT 補足）。
+- `vars[]` の変数名と色は**コードが算出**する：`{"spid":true}`→ "SPID"（接頭辞なし・灰）、DM は接頭辞なし（AGE/SEX/SITEID…）、他は domain+suffix、`testcd` 付きは Findings 表記「VAR when <dom>TESTCD = <値>」。色は `domainOrder` 内の位置から HSV（s=71/255, v=244/255）で Ptosh 同等に決定論算出。1 行に複数 `vars`（例 初回実施日＝PRSTDTC/ECSTDTC 併記）可。
+- `note`/`foot` のみ意図的 HTML を許可（raw 通し）。他のテキストは自動エスケープ。
+
+### worked example
+
+`reviews/AMCPR1A/aCRF-layout.json`（マニフェスト）→ `reviews/AMCPR1A/aCRF.html`（生成物）。先進医療実績報告の 10 テンプレートを 1 枚にまとめた実例。新規 aCRF はこれを雛形に複製して作る。
 
 ---
 
