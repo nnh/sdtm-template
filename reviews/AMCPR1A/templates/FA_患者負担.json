@@ -1,0 +1,83 @@
+{
+  "name": "③患者負担（先進医療費用）",
+  "domain": "FA",
+  "status": "draft",
+  "uuid": "fdc2409e-06f8-4981-b690-a3fafe189638",
+  "fieldItems": [
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "SPID",
+      "label": "テンプレート識別子",
+      "defaultValue": "",
+      "isInvisible": true,
+      "description": "--SPID（Sponsor-Defined Identifier）。フォーム入力の先進医療名を --SPID に設定し、全ドメイン共通の provenance タグとする。(STUDYID, USUBJID, --SPID) で同一フォーム由来レコードを束ねられる。標準 Identifier 変数・CT不要。本フォームは1患者1先進医療のため RELREC 不要。",
+      "uuid": "eea34859-3a0e-4010-89a4-0b4250683c3a"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "CAT",
+      "label": "区分",
+      "defaultValue": "COST",
+      "isInvisible": true,
+      "description": "FACAT＝費用カテゴリ。先進医療実績報告の費用4項目を COST でグルーピング。",
+      "uuid": "e0a81277-235f-4401-a7ae-6676272b7611"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "TESTCD",
+      "label": "費用項目コード",
+      "defaultValue": "COSTPAT",
+      "isInvisible": true,
+      "description": "FATESTCD（sponsor-defined・SDTM に費用標準ドメイン/CTなし）。8文字以内・ASCII。",
+      "uuid": "32ac0f87-e8c7-4c2f-8fb1-34d010541779"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "TEST",
+      "label": "費用項目名",
+      "defaultValue": "Cost, Patient Burden of Advanced Medical Care",
+      "isInvisible": true,
+      "description": "FATEST。③患者負担（先進医療費用） に対応する英語名。",
+      "uuid": "28735da3-0c09-443b-95a1-df0c49c6d82e"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "OBJ",
+      "label": "対象（先進医療名）",
+      "defaultValue": "",
+      "isInvisible": true,
+      "description": "FAOBJ＝所見の対象。先進医療名（PRTRT/ECTRT と同値）を試験構築時に設定し、費用が何についての所見かを示す。1患者1先進医療のため USUBJID＋FAOBJ で対象は一意＝RELREC 不要（1患者に複数の先進医療を扱う場合のみ RELREC/--LNKID で紐付け）。",
+      "uuid": "9e4f2610-a355-4a99-9570-bcf686406327"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "ORRESU",
+      "label": "通貨単位",
+      "defaultValue": "JPY",
+      "isInvisible": true,
+      "description": "FAORRESU＝通貨単位。UNIT CT に通貨は非収載のため ISO 4217 の JPY を sponsor 拡張で固定（is_tbc・要 bridgehead 登録）。",
+      "uuid": "6de0eca2-0781-4176-befb-afc73b26ba1c"
+    },
+    {
+      "type": "FieldItem::Article",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "ORRES",
+      "label": "③患者負担（先進医療費用）（円）",
+      "defaultValue": "",
+      "description": "FAORRES＝金額（円・整数）。FASTRESN は導出。RWD・観察モード：条件付き必須は非適用。SDTM に費用の標準ドメインがないため FA に押し込む設計（SUPP 不使用方針）。",
+      "validators": {
+        "numericality": {
+          "only_integer": true,
+          "greater_than_or_equal_to": 0
+        }
+      },
+      "uuid": "6dd842c2-da61-4dfd-be19-88d8c7787a77"
+    }
+  ]
+}
