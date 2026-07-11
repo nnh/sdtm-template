@@ -1,0 +1,133 @@
+{
+  "title": "先進医療「実績報告」 JASPEHR template",
+  "pageTitle": "先進医療実績報告 JASPEHR template",
+  "meta": "モード RWD・観察 ／ status: draft",
+  "domainOrder": ["DM", "MH", "PR", "EC", "HO", "DS", "FA", "RS"],
+  "legend": [
+    {"key": "SPID", "label": "SPID=Sponsor-Defined Identifier"},
+    {"key": "DM", "label": "DM=Demographics"},
+    {"key": "MH", "label": "MH=Medical History"},
+    {"key": "PR", "label": "PR=Procedures"},
+    {"key": "EC", "label": "EC=Exposure as Collected"},
+    {"key": "HO", "label": "HO=Healthcare Encounters"},
+    {"key": "DS", "label": "DS=Disposition"},
+    {"key": "FA", "label": "FA=Findings About"},
+    {"key": "RS", "label": "RS=Disease Response and Clin Classification"}
+  ],
+  "note": "色付きボックス＝SDTM 変数（ドメイン色）。Findings は「--ORRES when --TESTCD = 既定値」。破線＝固定修飾子・CT 補足。<span class=\"spx\">*</span>＝sponsor 拡張（is_tbc）。SPID＝先進医療名（全ドメイン共通の識別子）。初回実施日・実施回数は先進医療の種別で PR か EC のいずれかへ。",
+  "foot": "総合計（M列）＝ ①+②+③+④ の自動算出のため非収集。SPID＝先進医療名（provenance）。",
+  "sections": [
+    {
+      "header": "報告単位（ヘッダ）",
+      "rows": [
+        {
+          "label": "保険医療機関名",
+          "control": "text",
+          "vars": [{"domain": "DM", "suffix": "SITEID"}],
+          "notes": ["submission value = 保険医療機関コード（Ptosh 保持）", "報告単位で固定"]
+        },
+        {
+          "label": "先進医療名",
+          "control": "text",
+          "vars": [{"spid": true}],
+          "notes": ["フォーム入力＝SPID（全ドメイン共通の識別子・provenance）", "PR/EC では topic --TRT も兼ねる"]
+        }
+      ]
+    },
+    {
+      "header": "患者ごと（1行＝1患者）",
+      "rows": [
+        {
+          "label": "患者番号",
+          "control": "hidden",
+          "vars": [{"domain": "DM", "suffix": "SUBJID"}],
+          "notes": ["診察券番号から SUBJID へ自動代入"]
+        },
+        {
+          "label": "診断名",
+          "control": "text",
+          "vars": [{"domain": "MH", "suffix": "TERM"}],
+          "notes": ["MedDRA LLT（autocomplete でコード化）", "MHDECOD は導出のため非収集"]
+        },
+        {
+          "label": "年齢",
+          "control": "number",
+          "vars": [{"domain": "DM", "suffix": "AGE"}],
+          "notes": ["単位 AGEU = YEARS（C66781）"]
+        },
+        {
+          "label": "性別",
+          "control": "radio",
+          "options": [{"display": "男", "value": "M"}, {"display": "女", "value": "F"}],
+          "vars": [{"domain": "DM", "suffix": "SEX"}],
+          "notes": ["CT C66731 Sex"]
+        },
+        {
+          "label": "初回実施日",
+          "control": "date",
+          "vars": [{"domain": "PR", "suffix": "STDTC"}, {"domain": "EC", "suffix": "STDTC"}],
+          "notes": ["手技→PR / 薬物→EC"]
+        },
+        {
+          "label": "入院期間（日）",
+          "control": "number",
+          "vars": [{"domain": "HO", "suffix": "DUR"}],
+          "notes": ["整数(日)→ISO8601 P{n}D"]
+        },
+        {
+          "label": "実施回数（回）",
+          "control": "number",
+          "vars": [{"domain": "PR", "suffix": "DOSTOT"}, {"domain": "EC", "suffix": "DOSTOT"}],
+          "notes": ["単位 --DOSU = APPLICATION（C71620）"]
+        },
+        {
+          "label": "転帰",
+          "control": "radio",
+          "options": [
+            {"display": "治癒", "value": "RECOVERY"},
+            {"display": "継続", "value": "ONGOING", "sponsor": true},
+            {"display": "中止", "value": "DISCONTINUED", "sponsor": true},
+            {"display": "死亡", "value": "DEATH"}
+          ],
+          "vars": [{"domain": "DS", "suffix": "DECOD"}],
+          "notes": ["CT C66727 NCOMPLT", "DSCAT = DISPOSITION EVENT"]
+        },
+        {
+          "label": "保険外併用療養費分①（円）",
+          "control": "number",
+          "vars": [{"domain": "FA", "suffix": "ORRES", "testcd": "COSTINS"}],
+          "notes": ["単位 FAORRESU = JPY*"]
+        },
+        {
+          "label": "一部負担金②（円）",
+          "control": "number",
+          "vars": [{"domain": "FA", "suffix": "ORRES", "testcd": "COSTCOP"}],
+          "notes": ["単位 FAORRESU = JPY*"]
+        },
+        {
+          "label": "患者負担③（円）",
+          "control": "number",
+          "vars": [{"domain": "FA", "suffix": "ORRES", "testcd": "COSTPAT"}],
+          "notes": ["単位 FAORRESU = JPY*"]
+        },
+        {
+          "label": "その他④（円）",
+          "control": "number",
+          "vars": [{"domain": "FA", "suffix": "ORRES", "testcd": "COSTOTH"}],
+          "notes": ["単位 FAORRESU = JPY*"]
+        },
+        {
+          "label": "評価結果",
+          "control": "radio",
+          "options": [
+            {"display": "有効", "value": "EFFECTIVE", "sponsor": true},
+            {"display": "無効", "value": "NOT EFFECTIVE", "sponsor": true},
+            {"display": "不明", "value": "UNKNOWN", "sponsor": true}
+          ],
+          "vars": [{"domain": "RS", "suffix": "ORRES", "testcd": "OVRLEFF"}],
+          "notes": ["sponsor codelist", "RSTEST = Overall Efficacy"]
+        }
+      ]
+    }
+  ]
+}

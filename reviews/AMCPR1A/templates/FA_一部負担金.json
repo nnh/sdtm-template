@@ -1,0 +1,83 @@
+{
+  "name": "②一部負担金（被保険者負担）",
+  "domain": "FA",
+  "status": "draft",
+  "uuid": "c4be12ec-7b2b-4883-b18e-b2bc00f6ba8f",
+  "fieldItems": [
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "SPID",
+      "label": "テンプレート識別子",
+      "defaultValue": "",
+      "isInvisible": true,
+      "description": "--SPID（Sponsor-Defined Identifier）。フォーム入力の先進医療名を --SPID に設定し、全ドメイン共通の provenance タグとする。(STUDYID, USUBJID, --SPID) で同一フォーム由来レコードを束ねられる。標準 Identifier 変数・CT不要。本フォームは1患者1先進医療のため RELREC 不要。",
+      "uuid": "e0ba9e1c-0aa4-4d96-8836-9b7e6347f267"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "CAT",
+      "label": "区分",
+      "defaultValue": "COST",
+      "isInvisible": true,
+      "description": "FACAT＝費用カテゴリ。先進医療実績報告の費用4項目を COST でグルーピング。",
+      "uuid": "0eaac32e-2e28-45dc-95d4-c60827113f59"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "TESTCD",
+      "label": "費用項目コード",
+      "defaultValue": "COSTCOP",
+      "isInvisible": true,
+      "description": "FATESTCD（sponsor-defined・SDTM に費用標準ドメイン/CTなし）。8文字以内・ASCII。",
+      "uuid": "95bab4bf-efe1-4a0f-a804-15875a3f24ef"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "TEST",
+      "label": "費用項目名",
+      "defaultValue": "Cost, Insured Copayment Portion",
+      "isInvisible": true,
+      "description": "FATEST。②一部負担金（被保険者負担） に対応する英語名。",
+      "uuid": "208de268-7ea5-4eba-98b0-aa516c6c67c4"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "OBJ",
+      "label": "対象（先進医療名）",
+      "defaultValue": "",
+      "isInvisible": true,
+      "description": "FAOBJ＝所見の対象。先進医療名（PRTRT/ECTRT と同値）を試験構築時に設定し、費用が何についての所見かを示す。1患者1先進医療のため USUBJID＋FAOBJ で対象は一意＝RELREC 不要（1患者に複数の先進医療を扱う場合のみ RELREC/--LNKID で紐付け）。",
+      "uuid": "4de4e566-ec0c-4a7d-b8db-aea7676064ff"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "ORRESU",
+      "label": "通貨単位",
+      "defaultValue": "JPY",
+      "isInvisible": true,
+      "description": "FAORRESU＝通貨単位。UNIT CT に通貨は非収載のため ISO 4217 の JPY を sponsor 拡張で固定（is_tbc・要 bridgehead 登録）。",
+      "uuid": "73d1f8ea-3b18-42c8-9ae5-8fc13ca2caa9"
+    },
+    {
+      "type": "FieldItem::Article",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "ORRES",
+      "label": "②一部負担金（被保険者負担）（円）",
+      "defaultValue": "",
+      "description": "FAORRES＝金額（円・整数）。FASTRESN は導出。RWD・観察モード：条件付き必須は非適用。SDTM に費用の標準ドメインがないため FA に押し込む設計（SUPP 不使用方針）。",
+      "validators": {
+        "numericality": {
+          "only_integer": true,
+          "greater_than_or_equal_to": 0
+        }
+      },
+      "uuid": "fd108ea5-8fed-4399-a3ef-2bdc982f86ab"
+    }
+  ]
+}

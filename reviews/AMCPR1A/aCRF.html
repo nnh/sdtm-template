@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">
+<title>先進医療実績報告 JASPEHR template</title><style>
+body{font-family:'Hiragino Sans','Yu Gothic',sans-serif;color:#222;max-width:920px;margin:0 auto;padding:24px;line-height:1.5}
+h1{font-size:1.5em;margin:0 0 2px}.meta{color:#555;font-size:.85em;margin-bottom:12px}
+.legend{margin:10px 0 16px}
+.domain_name{display:inline-block;padding:3px 8px;margin:3px 4px 3px 0;border:1px solid #999;border-radius:3px;font-family:monospace;font-size:.8em}
+.note{background:#f7f7f7;border-left:4px solid #bbb;padding:8px 12px;font-size:.83em;margin:8px 0 14px}
+ul{list-style:none;padding:0;margin:0}
+li{border-bottom:1px dashed #ddd;padding:9px 0}
+li.secrow{border:none;padding:14px 0 2px}
+.sech{font-weight:bold;font-size:.95em;color:#225;border-bottom:2px solid #333;padding-bottom:3px}
+li.hiddenrow{background:#fafafa}
+.fi{display:flex;align-items:flex-start;gap:14px}
+.labels{flex:0 0 40%}.lab{font-weight:600}
+.ctrl{flex:1}
+input{padding:4px 6px;border:1px solid #aaa;border-radius:3px;background:#fafafa;width:88%}
+input[type=number]{width:150px}
+.hid{color:#999;font-size:.85em;font-style:italic}
+.opts{display:flex;flex-wrap:wrap;gap:10px}.opt{font-size:.92em}
+.sub{font-family:monospace;font-size:.82em;color:#444}.spx{color:#c00;font-weight:bold}
+.cvs{margin-top:6px}
+.cv{display:inline-block;padding:2px 7px;margin:2px 5px 2px 0;border:1px solid #888;border-radius:3px;font-family:monospace;font-size:.8em}
+.cvx{display:inline-block;padding:2px 7px;margin:2px 5px 2px 0;border:1px dashed #aaa;border-radius:3px;font-family:monospace;font-size:.75em;color:#555;background:#fcfcfc}
+.foot{margin-top:22px;border-top:1px solid #ccc;padding-top:10px;font-size:.8em;color:#555}
+@media print{body{max-width:none}@page{size:A4;margin:14mm}}
+</style></head><body>
+<h1>先進医療「実績報告」 JASPEHR template</h1>
+<div class="meta">モード RWD・観察 ／ status: draft</div>
+<div class="legend"><span class="domain_name" style="background-color:#e2e2e2">SPID=Sponsor-Defined Identifier</span><span class="domain_name" style="background-color:#f4b0b0">DM=Demographics</span><span class="domain_name" style="background-color:#f4e3b0">MH=Medical History</span><span class="domain_name" style="background-color:#d2f4b0">PR=Procedures</span><span class="domain_name" style="background-color:#b0f4c1">EC=Exposure as Collected</span><span class="domain_name" style="background-color:#b0f4f4">HO=Healthcare Encounters</span><span class="domain_name" style="background-color:#b0c1f4">DS=Disposition</span><span class="domain_name" style="background-color:#d2b0f4">FA=Findings About</span><span class="domain_name" style="background-color:#f4b0e3">RS=Disease Response and Clin Classification</span></div>
+<div class="note">色付きボックス＝SDTM 変数（ドメイン色）。Findings は「--ORRES when --TESTCD = 既定値」。破線＝固定修飾子・CT 補足。<span class="spx">*</span>＝sponsor 拡張（is_tbc）。SPID＝先進医療名（全ドメイン共通の識別子）。初回実施日・実施回数は先進医療の種別で PR か EC のいずれかへ。</div>
+<ul><li class="secrow"><div class="sech">報告単位（ヘッダ）</div></li>
+<li>
+  <div class="fi"><div class="labels"><div class="lab">保険医療機関名</div></div>
+  <div class="ctrl"><input type="text" disabled></div></div>
+  <div class="cvs"><span class="cv" style="background-color:#f4b0b0">SITEID</span><span class="cvx">submission value = 保険医療機関コード（Ptosh 保持）</span><span class="cvx">報告単位で固定</span></div></li>
+<li>
+  <div class="fi"><div class="labels"><div class="lab">先進医療名</div></div>
+  <div class="ctrl"><input type="text" disabled></div></div>
+  <div class="cvs"><span class="cv" style="background-color:#e2e2e2">SPID</span><span class="cvx">フォーム入力＝SPID（全ドメイン共通の識別子・provenance）</span><span class="cvx">PR/EC では topic --TRT も兼ねる</span></div></li>
+<li class="secrow"><div class="sech">患者ごと（1行＝1患者）</div></li>
+<li class="hiddenrow">
+  <div class="fi"><div class="labels"><div class="lab">患者番号</div></div>
+  <div class="ctrl"><span class="hid">［hidden / 自動］</span></div></div>
+  <div class="cvs"><span class="cv" style="background-color:#f4b0b0">SUBJID</span><span class="cvx">診察券番号から SUBJID へ自動代入</span></div></li>
+<li>
+  <div class="fi"><div class="labels"><div class="lab">診断名</div></div>
+  <div class="ctrl"><input type="text" disabled></div></div>
+  <div class="cvs"><span class="cv" style="background-color:#f4e3b0">MHTERM</span><span class="cvx">MedDRA LLT（autocomplete でコード化）</span><span class="cvx">MHDECOD は導出のため非収集</span></div></li>
+<li>
+  <div class="fi"><div class="labels"><div class="lab">年齢</div></div>
+  <div class="ctrl"><input type="number" step="1" disabled></div></div>
+  <div class="cvs"><span class="cv" style="background-color:#f4b0b0">AGE</span><span class="cvx">単位 AGEU = YEARS（C66781）</span></div></li>
+<li>
+  <div class="fi"><div class="labels"><div class="lab">性別</div></div>
+  <div class="ctrl"><div class="opts"><label class="opt"><input type="radio" disabled> 男 <span class="sub">→M</span></label><label class="opt"><input type="radio" disabled> 女 <span class="sub">→F</span></label></div></div></div>
+  <div class="cvs"><span class="cv" style="background-color:#f4b0b0">SEX</span><span class="cvx">CT C66731 Sex</span></div></li>
+<li>
+  <div class="fi"><div class="labels"><div class="lab">初回実施日</div></div>
+  <div class="ctrl"><input type="date" disabled></div></div>
+  <div class="cvs"><span class="cv" style="background-color:#d2f4b0">PRSTDTC</span><span class="cv" style="background-color:#b0f4c1">ECSTDTC</span><span class="cvx">手技→PR / 薬物→EC</span></div></li>
+<li>
+  <div class="fi"><div class="labels"><div class="lab">入院期間（日）</div></div>
+  <div class="ctrl"><input type="number" step="1" disabled></div></div>
+  <div class="cvs"><span class="cv" style="background-color:#b0f4f4">HODUR</span><span class="cvx">整数(日)→ISO8601 P{n}D</span></div></li>
+<li>
+  <div class="fi"><div class="labels"><div class="lab">実施回数（回）</div></div>
+  <div class="ctrl"><input type="number" step="1" disabled></div></div>
+  <div class="cvs"><span class="cv" style="background-color:#d2f4b0">PRDOSTOT</span><span class="cv" style="background-color:#b0f4c1">ECDOSTOT</span><span class="cvx">単位 --DOSU = APPLICATION（C71620）</span></div></li>
+<li>
+  <div class="fi"><div class="labels"><div class="lab">転帰</div></div>
+  <div class="ctrl"><div class="opts"><label class="opt"><input type="radio" disabled> 治癒 <span class="sub">→RECOVERY</span></label><label class="opt"><input type="radio" disabled> 継続 <span class="sub">→ONGOING<span class="spx">*</span></span></label><label class="opt"><input type="radio" disabled> 中止 <span class="sub">→DISCONTINUED<span class="spx">*</span></span></label><label class="opt"><input type="radio" disabled> 死亡 <span class="sub">→DEATH</span></label></div></div></div>
+  <div class="cvs"><span class="cv" style="background-color:#b0c1f4">DSDECOD</span><span class="cvx">CT C66727 NCOMPLT</span><span class="cvx">DSCAT = DISPOSITION EVENT</span></div></li>
+<li>
+  <div class="fi"><div class="labels"><div class="lab">保険外併用療養費分①（円）</div></div>
+  <div class="ctrl"><input type="number" step="1" disabled></div></div>
+  <div class="cvs"><span class="cv" style="background-color:#d2b0f4">FAORRES when FATESTCD = COSTINS</span><span class="cvx">単位 FAORRESU = JPY*</span></div></li>
+<li>
+  <div class="fi"><div class="labels"><div class="lab">一部負担金②（円）</div></div>
+  <div class="ctrl"><input type="number" step="1" disabled></div></div>
+  <div class="cvs"><span class="cv" style="background-color:#d2b0f4">FAORRES when FATESTCD = COSTCOP</span><span class="cvx">単位 FAORRESU = JPY*</span></div></li>
+<li>
+  <div class="fi"><div class="labels"><div class="lab">患者負担③（円）</div></div>
+  <div class="ctrl"><input type="number" step="1" disabled></div></div>
+  <div class="cvs"><span class="cv" style="background-color:#d2b0f4">FAORRES when FATESTCD = COSTPAT</span><span class="cvx">単位 FAORRESU = JPY*</span></div></li>
+<li>
+  <div class="fi"><div class="labels"><div class="lab">その他④（円）</div></div>
+  <div class="ctrl"><input type="number" step="1" disabled></div></div>
+  <div class="cvs"><span class="cv" style="background-color:#d2b0f4">FAORRES when FATESTCD = COSTOTH</span><span class="cvx">単位 FAORRESU = JPY*</span></div></li>
+<li>
+  <div class="fi"><div class="labels"><div class="lab">評価結果</div></div>
+  <div class="ctrl"><div class="opts"><label class="opt"><input type="radio" disabled> 有効 <span class="sub">→EFFECTIVE<span class="spx">*</span></span></label><label class="opt"><input type="radio" disabled> 無効 <span class="sub">→NOT EFFECTIVE<span class="spx">*</span></span></label><label class="opt"><input type="radio" disabled> 不明 <span class="sub">→UNKNOWN<span class="spx">*</span></span></label></div></div></div>
+  <div class="cvs"><span class="cv" style="background-color:#f4b0e3">RSORRES when RSTESTCD = OVRLEFF</span><span class="cvx">sponsor codelist</span><span class="cvx">RSTEST = Overall Efficacy</span></div></li></ul>
+<div class="foot">総合計（M列）＝ ①+②+③+④ の自動算出のため非収集。SPID＝先進医療名（provenance）。</div>
+</body></html>

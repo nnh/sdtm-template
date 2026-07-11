@@ -1,0 +1,92 @@
+{
+  "name": "患者基本情報",
+  "domain": "DM",
+  "status": "draft",
+  "uuid": "b8d88cb3-9560-4938-86e7-9c5885316f02",
+  "fieldItems": [
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "SPID",
+      "label": "テンプレート識別子",
+      "defaultValue": "",
+      "isInvisible": true,
+      "description": "--SPID（Sponsor-Defined Identifier）。フォーム入力の先進医療名を --SPID に設定し、全ドメイン共通の provenance タグとする。(STUDYID, USUBJID, --SPID) で同一フォーム由来レコードを束ねられる。標準 Identifier 変数・CT不要。本フォームは1患者1先進医療のため RELREC 不要。",
+      "uuid": "05d3633a-0a77-4c60-b7ce-f87a8517756c"
+    },
+    {
+      "type": "FieldItem::Article",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "SITEID",
+      "label": "保険医療機関名",
+      "defaultValue": "",
+      "description": "DM.SITEID＝報告施設。submission value は保険医療機関コード（Ptosh が保持）。表示は機関名、SDTM 値はコード。報告単位で固定。",
+      "uuid": "311d7fc8-d2a6-45b2-977d-151d2a590497"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "SUBJID",
+      "label": "患者番号",
+      "defaultValue": "",
+      "isInvisible": true,
+      "description": "DM.SUBJID。診察券番号を SUBJID に自動代入（hidden）。USUBJID の基。",
+      "uuid": "f8f19607-c1e9-499c-bde7-dad41db2a662"
+    },
+    {
+      "type": "FieldItem::Article",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "AGE",
+      "label": "年齢",
+      "defaultValue": "",
+      "description": "DM.AGE。整数。単位は AGEU=YEARS（C66781 実在確認済）。",
+      "validators": {
+        "numericality": {
+          "only_integer": true,
+          "greater_than_or_equal_to": 0
+        }
+      },
+      "uuid": "f8b33621-5859-45b3-86ae-a7f09a51cdd1"
+    },
+    {
+      "type": "FieldItem::Assigned",
+      "fieldType": "text",
+      "cdiscVariableSuffix": "AGEU",
+      "label": "年齢単位",
+      "defaultValue": "YEARS",
+      "isInvisible": true,
+      "description": "DM.AGEU＝年齢単位。UNIT/Age Unit CT（C66781）の標準語 YEARS を固定。",
+      "uuid": "54d7c1ba-a25d-4a6d-a5f7-9cc8a6bdecd0"
+    },
+    {
+      "type": "FieldItem::Article",
+      "fieldType": "radio_button",
+      "cdiscVariableSuffix": "SEX",
+      "label": "性別",
+      "defaultValue": "",
+      "description": "DM.SEX。CT Sex（C66731）実在確認済。表示日本語・submission value は ASCII。",
+      "controlledTerminology": {
+        "name": "SEX",
+        "series": "C66731",
+        "codelistName": "Sex",
+        "version": "2025-09-26",
+        "extensible": false,
+        "terms": [
+          {
+            "submissionValue": "M",
+            "display": "男",
+            "ctSource": "C66731",
+            "isTbc": false
+          },
+          {
+            "submissionValue": "F",
+            "display": "女",
+            "ctSource": "C66731",
+            "isTbc": false
+          }
+        ]
+      },
+      "uuid": "7956d4e0-2605-4925-9f7a-ef7219549d39"
+    }
+  ]
+}
