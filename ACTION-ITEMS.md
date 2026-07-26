@@ -15,6 +15,10 @@
 - [ ] `HODUR` の整数→ISO8601 P{n}D 変換を export 側で実装
 - [ ] 診断名 MH テンプレート（別管理）に `--SPID` を付与
 
+## Skill のトークン削減
+
+- [ ] `draft-sdtm-template`（`.claude/skills/`）に progressive disclosure を適用する。SKILL.md 本文に TemplateInput スキーマ全文・aCRF マニフェスト詳細が入っており、発火のたびに全量ロードされる。`references/` へ切り出し、本文には呼び出し口と実行時に効く注意だけ残す。指針と他スキルでの実施例は ai-environment `docs/claude-code/skill-command-token-audit.md`（2026-07-26 に claude-toolkit の5スキルで実施済み）。
+
 ## Phase 6 還流
 
 - [ ] レビュー確定後、確定判断を `docs/rule-candidates.md` へ蒸留（候補: FA 費用格納・`--DOSTOT` 転用・sponsor 拡張マッピング・SPID provenance・RWD の count-in-interventions）。誤りは retire。established 昇格はメンテナのキュレーション。
